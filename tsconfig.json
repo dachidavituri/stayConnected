@@ -6,8 +6,7 @@
       "~/*": ["./*"],
       "&/*": ["./src/components/*"],
       "#/*": ["./src/pages/*"],
-      "!/*": ["./src/assets/*"],
-      
+      "!/*": ["./src/assets/*"]
     }
   },
 
@@ -17,4 +16,3 @@
     { "path": "./tsconfig.node.json" }
   ]
 }
-
