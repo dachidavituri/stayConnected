@@ -4,10 +4,10 @@ import RegistrationView from "#/registration/views";
 import LoginViews from "#/login/views";
 import NotFoundView from "&/notFound";
 import AskQuestionsView from "#/questions/views";
-import AuthRegisterGuard from "&/guard/authGuard";
+// import AuthRegisterGuard from "&/guard/authGuard";
 // import ProfileGuard from "&/guard/profileGuard";
 import DefaultLayout from "./layouts";
-
+import SingleQuestionView from "#/singleQuestion/views";
 const App: React.FC = () => {
   return (
     <div>
@@ -15,17 +15,17 @@ const App: React.FC = () => {
         <Route
           path="login"
           element={
-            <AuthRegisterGuard>
-              <LoginViews />
-            </AuthRegisterGuard>
+            // <AuthRegisterGuard>
+            <LoginViews />
+            // </AuthRegisterGuard>
           }
         ></Route>
         <Route
           path="register"
           element={
-            <AuthRegisterGuard>
-              <RegistrationView />
-            </AuthRegisterGuard>
+            // <AuthRegisterGuard>
+            <RegistrationView />
+            // </AuthRegisterGuard>
           }
         ></Route>
         <Route path="/" element={<DefaultLayout />}>
@@ -37,6 +37,7 @@ const App: React.FC = () => {
               // </ProfileGuard>
             }
           />
+          <Route path="single-question" element={<SingleQuestionView />} />
           <Route path="/" element={<Navigate to="login" />} />
           <Route path="*" element={<NotFoundView />} />
         </Route>

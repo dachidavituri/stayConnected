@@ -19,7 +19,7 @@ const QuestionPageData = {
       answeredBy: {
         name: "Davit Gordadze",
         avatarUrl: "/avatar.png",
-        rating: 5,
+        rating: 3,
       },
       date: "06.11.2024",
     },

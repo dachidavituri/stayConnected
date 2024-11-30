@@ -14,7 +14,7 @@ const QuestionPageData = {
   },
 };
 
-const Question = () => {
+const Question: React.FC = () => {
   return (
     <Card className="p-6 md:p-8 bg-white rounded-lg flex flex-col gap-8">
       <div className="flex justify-end items-center gap-6">

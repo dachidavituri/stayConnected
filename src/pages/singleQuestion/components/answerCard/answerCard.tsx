@@ -1,5 +1,5 @@
 import { FaStar, FaThumbsUp, FaRegStar } from "react-icons/fa";
-
+import { Button } from "@/components/ui/button";
 interface AnsweredBy {
   avatarUrl: string;
   name: string;
@@ -30,9 +30,7 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ answer }) => {
   };
 
   return (
-    <div
-      className="mt-8 p-6 md:p-8 flex flex-col gap-4 mx-5 sm:mx-[120px]"
-    >
+    <div className="mt-8 p-6 md:p-8 flex flex-col gap-4 mx-5 sm:mx-[120px] border border-gray-200 rounded-lg">
       <div className="flex items-center gap-4">
         <img
           src={answer.answeredBy.avatarUrl}
@@ -52,14 +50,14 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ answer }) => {
       <div className="flex justify-between items-center flex-col sm:flex-row">
         <span className="text-sm text-gray-500">{answer.date}</span>
         <div className="flex gap-4">
-          <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-100">
-            <FaThumbsUp className="text-blue-600" />
+          <Button>
+            <FaThumbsUp className="text-white" />
             Like
-          </button>
-          <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+          </Button>
+          <Button>
             <FaStar className="text-white" />
             Accept
-          </button>
+          </Button>
         </div>
       </div>
     </div>

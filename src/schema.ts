@@ -5,11 +5,11 @@ const passwordSchema = z
   .min(1, { message: "Password is required" })
   .min(8, { message: "Password must be at least 8 characters long." })
   .regex(/[A-Z]/, {
-    message: "Password must contain at least one uppercase letter.",
+    message: "Password  contain at least one uppercase letter.",
   })
-  .regex(/[0-9]/, { message: "Password must contain at least one number." })
+  .regex(/[0-9]/, { message: "Password  contain at least one number." })
   .regex(/[\W_]/, {
-    message: "Password must contain at least one special character.",
+    message: "Password  contain at least one special character.",
   });
 
 export const loginFormSchema = z.object({
