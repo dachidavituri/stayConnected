@@ -8,7 +8,7 @@ const DefaultLayout: React.FC = () => {
     <>
      <div className="min-h-screen flex flex-col w-full">
      <Header />
-      <main className="py-8 flex-grow">
+      <main className="py-8 flex-grow ">
         <Outlet />
       </main>
       <Footer />

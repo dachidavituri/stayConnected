@@ -3,9 +3,9 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import RegistrationView from "#/registration/views";
 import LoginForm from "#/login/views";
 import NotFoundView from "&/notFound";
-import QuestionsView from "#/questions/views";
+import AskQuestionsView from "#/questions/views";
 import AuthRegisterGuard from "&/guard/authGuard";
-import ProfileGuard from "&/guard/profileGuard";
+// import ProfileGuard from "&/guard/profileGuard";
 import DefaultLayout from "./layouts";
 
 const App: React.FC = () => {
@@ -18,6 +18,7 @@ const App: React.FC = () => {
             element={
               <AuthRegisterGuard>
                 <LoginForm />
+               
               </AuthRegisterGuard>
             }
           ></Route>
@@ -33,14 +34,22 @@ const App: React.FC = () => {
             <Route
               path="questions"
               element={
-                <ProfileGuard>
-                  <QuestionsView />
-                </ProfileGuard>
+                // <ProfileGuard>
+                  <AskQuestionsView />
+                /* </ProfileGuard> */
               }
             />
             <Route path="/" element={<Navigate to="login" />} />
             <Route path="*" element={<NotFoundView />} />
           </Route>
+          <Route
+              path="questions"
+              element={
+                // <ProfileGuard>
+                  <AskQuestionsView />
+                /* </ProfileGuard> */
+              }
+            />
         </Routes>
       </BrowserRouter>
     </div>
