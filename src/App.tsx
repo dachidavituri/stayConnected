@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import {  Navigate, Route, Routes } from "react-router";
 import RegistrationView from "#/registration/views";
 import LoginForm from "#/login/views";
 import NotFoundView from "&/notFound";
@@ -11,7 +11,7 @@ import DefaultLayout from "./layouts";
 const App: React.FC = () => {
   return (
     <div>
-      <BrowserRouter>
+  
         <Routes>
           <Route
             path="login"
@@ -42,7 +42,7 @@ const App: React.FC = () => {
             <Route path="*" element={<NotFoundView />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+    
     </div>
   );
 };
