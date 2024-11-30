@@ -5,7 +5,7 @@ import LoginViews from "#/login/views";
 import NotFoundView from "&/notFound";
 import AskQuestionsView from "#/questions/views";
 import AuthRegisterGuard from "&/guard/authGuard";
-import ProfileGuard from "&/guard/profileGuard";
+// import ProfileGuard from "&/guard/profileGuard";
 import DefaultLayout from "./layouts";
 
 const App: React.FC = () => {
@@ -32,9 +32,9 @@ const App: React.FC = () => {
           <Route
             path="questions"
             element={
-              <ProfileGuard>
-                <AskQuestionsView />
-              </ProfileGuard>
+              // <ProfileGuard>
+              <AskQuestionsView />
+              // </ProfileGuard>
             }
           />
           <Route path="/" element={<Navigate to="login" />} />

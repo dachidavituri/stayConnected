@@ -1,6 +1,3 @@
-
-
-
 import React from "react";
 import Container from "../ui/container";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
