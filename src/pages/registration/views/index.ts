@@ -1,1 +1,1 @@
-export {default} from './registrationView'
+export { default } from "./registrationView";

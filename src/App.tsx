@@ -1,7 +1,7 @@
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import RegistrationView from "#/registration/views";
-import LoginForm from "#/login/views";
+import LoginViews from "#/login/views";
 import NotFoundView from "&/notFound";
 import QuestionsView from "#/questions/views";
 import AuthRegisterGuard from "&/guard/authGuard";
@@ -11,38 +11,36 @@ import DefaultLayout from "./layouts";
 const App: React.FC = () => {
   return (
     <div>
-      <BrowserRouter>
-        <Routes>
+      <Routes>
+        <Route
+          path="login"
+          element={
+            <AuthRegisterGuard>
+              <LoginViews />
+            </AuthRegisterGuard>
+          }
+        ></Route>
+        <Route
+          path="register"
+          element={
+            <AuthRegisterGuard>
+              <RegistrationView />
+            </AuthRegisterGuard>
+          }
+        ></Route>
+        <Route path="/" element={<DefaultLayout />}>
           <Route
-            path="login"
+            path="questions"
             element={
-              <AuthRegisterGuard>
-                <LoginForm />
-              </AuthRegisterGuard>
+              <ProfileGuard>
+                <QuestionsView />
+              </ProfileGuard>
             }
-          ></Route>
-          <Route
-            path="register"
-            element={
-              <AuthRegisterGuard>
-                <RegistrationView />
-              </AuthRegisterGuard>
-            }
-          ></Route>
-          <Route path="/" element={<DefaultLayout />}>
-            <Route
-              path="questions"
-              element={
-                <ProfileGuard>
-                  <QuestionsView />
-                </ProfileGuard>
-              }
-            />
-            <Route path="/" element={<Navigate to="login" />} />
-            <Route path="*" element={<NotFoundView />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          />
+          <Route path="/" element={<Navigate to="login" />} />
+          <Route path="*" element={<NotFoundView />} />
+        </Route>
+      </Routes>
     </div>
   );
 };
