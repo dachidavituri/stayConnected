@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router";
 import RegistrationView from "#/registration/views";
 import LoginViews from "#/login/views";
 import NotFoundView from "&/notFound";
-import QuestionsView from "#/questions/views";
+import AskQuestionsView from "#/questions/views";
 import AuthRegisterGuard from "&/guard/authGuard";
 import ProfileGuard from "&/guard/profileGuard";
 import DefaultLayout from "./layouts";
@@ -33,7 +33,7 @@ const App: React.FC = () => {
             path="questions"
             element={
               <ProfileGuard>
-                <QuestionsView />
+                <AskQuestionsView />
               </ProfileGuard>
             }
           />
