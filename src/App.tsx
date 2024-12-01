@@ -1,6 +1,7 @@
 import "./App.css";
 import { Navigate, Route, Routes } from "react-router";
 import RegistrationView from "#/registration/views";
+import HomeView from "./pages/home/views/homeView";
 import LoginViews from "#/login/views";
 import NotFoundView from "&/notFound";
 import AskQuestionsView from "#/questions/views";
@@ -37,6 +38,7 @@ const App: React.FC = () => {
               // </ProfileGuard>
             }
           />
+          <Route path="home" element={<HomeView />} />
           <Route path="single-question" element={<SingleQuestionView />} />
           <Route path="/" element={<Navigate to="login" />} />
           <Route path="*" element={<NotFoundView />} />
