@@ -42,7 +42,7 @@ const AnswerFild: React.FC = () => {
               />
             )}
           />
-          {errors.answer?.message && (
+          {errors.answer && (
             <span className="text-red-600 font-semibold text-xs sm:text-sm md:text-base">
               {errors.answer.message}
             </span>

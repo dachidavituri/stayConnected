@@ -17,20 +17,32 @@ const FRAMEWORKS = [
   { value: "nuxt.js", label: "Nuxt.js" },
   { value: "remix", label: "Remix" },
   { value: "astro", label: "Astro" },
-  { value: "wordpress", label: "WordPress" },
   { value: "express.js", label: "Express.js" },
   { value: "nest.js", label: "Nest.js" },
+  { value: "react", label: "React.js" },
+  { value: "angular", label: "Angular" },
+  { value: "vue", label: "Vue.js" },
 ] satisfies Framework[];
 
-const FancyMultiSelect: React.FC = () => {
+interface FancyMultiSelectProps {
+  value: string[];
+  onChange: (selected: string[]) => void;
+}
+
+const FancyMultiSelect: React.FC<FancyMultiSelectProps> = ({
+  value,
+  onChange,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<Framework[]>([]);
   const [inputValue, setInputValue] = useState("");
 
-  const handleUnselect = useCallback((framework: Framework) => {
-    setSelected((prev) => prev.filter((s) => s.value !== framework.value));
-  }, []);
+  const handleUnselect = useCallback(
+    (frameworkValue: string) => {
+      onChange(value.filter((v) => v !== frameworkValue));
+    },
+    [value, onChange],
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -38,11 +50,7 @@ const FancyMultiSelect: React.FC = () => {
       if (input) {
         if (e.key === "Delete" || e.key === "Backspace") {
           if (input.value === "") {
-            setSelected((prev) => {
-              const newSelected = [...prev];
-              newSelected.pop();
-              return newSelected;
-            });
+            onChange(value.slice(0, value.length - 1));
           }
         }
         if (e.key === "Escape") {
@@ -50,11 +58,11 @@ const FancyMultiSelect: React.FC = () => {
         }
       }
     },
-    [],
+    [value, onChange],
   );
 
   const selectables = FRAMEWORKS.filter(
-    (framework) => !selected.some((s) => s.value === framework.value),
+    (framework) => !value.includes(framework.value),
   );
 
   return (
@@ -64,12 +72,12 @@ const FancyMultiSelect: React.FC = () => {
     >
       <div className="group rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
         <div className="flex flex-wrap gap-1">
-          {selected.map((framework) => (
-            <Badge key={framework.value} variant="secondary">
-              {framework.label}
+          {value.map((frameworkValue) => (
+            <Badge key={frameworkValue} variant="secondary">
+              {FRAMEWORKS.find((fw) => fw.value === frameworkValue)?.label}
               <button
                 className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                onClick={() => handleUnselect(framework)}
+                onClick={() => handleUnselect(frameworkValue)}
                 onMouseDown={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -104,7 +112,7 @@ const FancyMultiSelect: React.FC = () => {
                     }}
                     onSelect={() => {
                       setInputValue("");
-                      setSelected((prev) => [...prev, framework]);
+                      onChange([...value, framework.value]);
                     }}
                     className="cursor-pointer"
                   >

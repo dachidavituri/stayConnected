@@ -40,5 +40,20 @@ export const regiserFormSchema = z
 export const answerFormSchema = z.object({
   answer: z
     .string()
+    .min(1, { message: "Answer is required" })
     .min(15, { message: "Answer must be at least 15 characters long" }),
+});
+
+export const addQuetionSchema = z.object({
+  title: z
+    .string()
+    .min(1, { message: "Title is required" })
+    .min(3, { message: "Title must be at least 4 characters long" }),
+  description: z
+    .string()
+    .min(1, { message: "Description is required" })
+    .min(25, { message: "Title must be at least 25 characters long" }),
+  tag: z
+    .array(z.string())
+    .min(1, { message: "Please choose at least 1 framework" }),
 });
