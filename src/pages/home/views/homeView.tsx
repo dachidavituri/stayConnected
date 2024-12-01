@@ -40,7 +40,7 @@ const HomeView: React.FC = () => {
         <div className="flex flex-col xl:flex-row gap-6 items-start ">
           <div className=" w-full xl:w-[30%]">
             <Card className="flex flex-col gap-6">
-              <Heading level={1}>Ratig of users</Heading>
+              <Heading level={1}>Rating of users</Heading>
               {RATINGS_DAMMY_DATA.map((data, index) => {
                 return <RatingItem key={index} {...data} />;
               })}
@@ -49,7 +49,7 @@ const HomeView: React.FC = () => {
           <div className="flex flex-col gap-6 w-full xl:w-[70%] ">
             {QUESTIONITEM_DYMMY_DATA.map((data, index) => {
               return (
-                <Link to="/" key={index}>
+                <Link to="/questions/1" key={index}>
                   <QuestionItem {...data} />
                 </Link>
               );

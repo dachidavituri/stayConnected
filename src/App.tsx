@@ -42,7 +42,7 @@ const App: React.FC = () => {
           <Route path="questions/:id" element={<SingleQuestionView />} />
           <Route path="/" element={<Navigate to="login" />} />
         </Route>
-        
+
         <Route path="*" element={<NotFoundView />} />
       </Routes>
     </div>
