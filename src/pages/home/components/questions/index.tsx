@@ -49,7 +49,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
           </div>
         </div>
 
-        {/*  {badges.map((badge, index) => (
+        {/*{badges.map((badge, index) => (
         <Badge key={index}>{badge}</Badge>
       ))} */}
       </Card>
