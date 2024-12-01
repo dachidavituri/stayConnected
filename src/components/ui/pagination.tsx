@@ -67,12 +67,12 @@ const PaginationPrevious = ({
     aria-label="Go to previous page"
     size="default"
     className={cn(
-      "gap-1 pl-2.5 hover:bg-black hover:text-white cursor-pointer",
+      "gap-1 pl-2.5 hover:bg-black hover:text-white cursor-pointer select-none",
       className,
     )}
     {...props}
   >
-    <ChevronLeft className="h-4 w-4" />
+    <ChevronLeft className="h-4 w-4 " />
     <span>Previous</span>
   </PaginationLink>
 );
@@ -86,7 +86,7 @@ const PaginationNext = ({
     aria-label="Go to next page"
     size="default"
     className={cn(
-      "gap-1 pr-2.5 hover:bg-black hover:text-white cursor-pointer",
+      "gap-1 pr-2.5 hover:bg-black hover:text-white cursor-pointer select-none",
       className,
     )}
     {...props}
