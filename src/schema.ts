@@ -25,7 +25,7 @@ export const regiserFormSchema = z
     name: z
       .string()
       .min(1, { message: "Name is required" })
-      .min(3, { message: "Name must be at least 3 characters long." }),
+      .min(3, { message: "Name must be at least 3 characters long" }),
 
     password: passwordSchema,
     confirmPassword: z
@@ -36,3 +36,9 @@ export const regiserFormSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+export const answerFormSchema = z.object({
+  answer: z
+    .string()
+    .min(15, { message: "Answer must be at least 15 characters long" }),
+});
