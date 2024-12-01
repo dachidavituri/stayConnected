@@ -3,6 +3,7 @@ import RatingItem from "../components/raitings";
 import Card from "@/components/ui/card";
 import Container from "@/components/ui/container";
 import Heading from "@/components/ui/heading";
+import { Link } from "react-router";
 
 const QUESTIONITEM_DYMMY_DATA = [
   {
@@ -22,7 +23,6 @@ const QUESTIONITEM_DYMMY_DATA = [
     question:
       " Jotai i simple and fast state management library for Nex It is based on the idea of atoms and selectors. Atoms are the smallest units of state that can be created using the atom function. Selectors are   derived state that can be created using the selector function.",
     badges: ["react", "Jotai", "Development", "next"],
-    link: "/questions/1",
     answers: 12,
   },
 ];
@@ -48,7 +48,11 @@ const HomeView: React.FC = () => {
           </div>
           <div className="flex flex-col gap-6 w-full xl:w-[70%] ">
             {QUESTIONITEM_DYMMY_DATA.map((data, index) => {
-              return <QuestionItem key={index} {...data} />;
+              return (
+                <Link to="/" key={index}>
+                  <QuestionItem {...data} />
+                </Link>
+              );
             })}
           </div>
         </div>
