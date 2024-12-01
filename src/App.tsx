@@ -39,7 +39,7 @@ const App: React.FC = () => {
             }
           />
           <Route path="home" element={<HomeView />} />
-          <Route path="single-question" element={<SingleQuestionView />} />
+          <Route path="questions/:id" element={<SingleQuestionView />} />
           <Route path="/" element={<Navigate to="login" />} />
           <Route path="*" element={<NotFoundView />} />
         </Route>
