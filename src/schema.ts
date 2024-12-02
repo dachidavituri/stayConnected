@@ -17,6 +17,7 @@ export const loginFormSchema = z.object({
     .string()
     .min(1, { message: "Name is required" })
     .min(3, { message: "Name must be at least 3 characters long." }),
+  email: z.string().email(),
   password: passwordSchema,
 });
 
@@ -26,7 +27,7 @@ export const regiserFormSchema = z
       .string()
       .min(1, { message: "Name is required" })
       .min(3, { message: "Name must be at least 3 characters long" }),
-
+    email: z.string().email(),
     password: passwordSchema,
     confirmPassword: z
       .string()

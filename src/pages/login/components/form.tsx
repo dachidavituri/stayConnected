@@ -14,7 +14,7 @@ const LoginForm: React.FC = () => {
     formState: { errors },
   } = useForm<UserForm>({
     resolver: zodResolver(loginFormSchema),
-    defaultValues: { name: "", password: "" },
+    defaultValues: { name: "", password: "", email: "" },
   });
   const onSubmit: SubmitHandler<UserForm> = (data) => {
     const result = loginFormSchema.safeParse(data);
@@ -34,6 +34,20 @@ const LoginForm: React.FC = () => {
           {errors.name?.message && (
             <span className="text-red-600 font-semibold text-xs sm:text-sm md:text-base">
               {errors.name.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field }) => (
+              <Input id="email" placeholder="Email" {...field} />
+            )}
+          />
+          {errors.email?.message && (
+            <span className="text-red-600 font-semibold text-xs sm:text-sm md:text-base">
+              {errors.email.message}
             </span>
           )}
         </div>

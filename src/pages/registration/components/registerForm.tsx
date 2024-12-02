@@ -14,7 +14,7 @@ const RegisterForm: React.FC = () => {
     formState: { errors },
   } = useForm<RegisterForm>({
     resolver: zodResolver(regiserFormSchema),
-    defaultValues: { name: "", password: "", confirmPassword: "" },
+    defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
   });
   const onSubmit: SubmitHandler<RegisterForm> = (data) => {
     const result = regiserFormSchema.safeParse(data);
@@ -34,6 +34,20 @@ const RegisterForm: React.FC = () => {
           {errors.name?.message && (
             <span className="text-red-600 font-semibold text-xs sm:text-sm md:text-base">
               {errors.name.message}
+            </span>
+          )}
+        </div>
+        <div>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field }) => (
+              <Input id="email" placeholder="Email" {...field} />
+            )}
+          />
+          {errors.email?.message && (
+            <span className="text-red-600 font-semibold text-xs sm:text-sm md:text-base">
+              {errors.email.message}
             </span>
           )}
         </div>
