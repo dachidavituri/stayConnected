@@ -1,84 +1,159 @@
+import React, { useRef } from "react";
 import Profile from "../components/profile";
 import Container from "@/components/ui/container";
 import QuestionItem from "@/pages/home/components/questions";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import { useVirtualizer } from "@tanstack/react-virtual";
+
 const QUESTIONITEM_DYMMY_DATA = [
   {
-    title: "1 What is Jotaiiiiii?",
+    title: "1 What is Jotai?",
     author: "Tinatin Gordadze",
     date: "12.12.2024",
-    question:
-      " Jotai i simple and fast state management library for Nex It is based on the idea of atoms and selectors. Atoms are the smallest units of state that can be created using the atom function. Selectors are   derived state that can be created using the selector function.",
+    question: "Jotai is a simple and fast state management library.",
     badges: ["react", "Jotai", "Development", "next"],
     link: "/questions/1",
     answers: 12,
   },
   {
-    title: "2 What is Jotai?",
+    title: "1 What is Jotai?",
     author: "Tinatin Gordadze",
     date: "12.12.2024",
-    question:
-      " Jotai i simple and fast state management library for Nex It is based on the idea of atoms and selectors. Atoms are the smallest units of state that can be created using the atom function. Selectors are   derived state that can be created using the selector function.",
+    question: "Jotai is a simple and fast state management library.",
     badges: ["react", "Jotai", "Development", "next"],
+    link: "/questions/1",
+    answers: 12,
+  },
+  {
+    title: "1 What is Jotai?",
+    author: "Tinatin Gordadze",
+    date: "12.12.2024",
+    question: "Jotai is a simple and fast state management library.",
+    badges: ["react", "Jotai", "Development", "next"],
+    link: "/questions/1",
     answers: 12,
   },
 ];
+
 const LIKED_QUESTIONITEM_DYMMY_DATA = [
   {
     title: "22 What is Jotai?",
     author: "Tinatin Gordadze",
     date: "12.12.2024",
-    question:
-      " Jotai i simple and fast state management library for Nex It is based on the idea of atoms and selectors. Atoms are the smallest units of state that can be created using the atom function. Selectors are   derived state that can be created using the selector function.",
+    question: "Jotai is a simple and fast state management library.",
     badges: ["react", "Jotai", "Development", "next"],
-    link: "/questions/1",
-    answers: 12,
-  },
-  {
-    title: "44 What is Jotai?",
-    author: "Tinatin Gordadze",
-    date: "12.12.2024",
-    question:
-      " Jotai i simple and fast state management library for Nex It is based on the idea of atoms and selectors. Atoms are the smallest units of state that can be created using the atom function. Selectors are   derived state that can be created using the selector function.",
-    badges: ["react", "Jotai", "Development", "next"],
+    link: "/questions/22",
     answers: 12,
   },
 ];
 
 const ProfileView: React.FC = () => {
+  const parentRefAskedQuestions = useRef<HTMLDivElement>(null);
+  const parentRefLikedQuestions = useRef<HTMLDivElement>(null);
+
+  const askedQuestionsVirtual = useVirtualizer({
+    count: QUESTIONITEM_DYMMY_DATA.length,
+    getScrollElement: () => parentRefAskedQuestions.current,
+    estimateSize: () => 200,
+    measureElement: (el) => el.getBoundingClientRect().height + 16,
+  });
+
+  const likedQuestionsVirtual = useVirtualizer({
+    count: LIKED_QUESTIONITEM_DYMMY_DATA.length,
+    getScrollElement: () => parentRefLikedQuestions.current,
+    estimateSize: () => 200,
+    measureElement: (el) => el.getBoundingClientRect().height + 16,
+  });
+
   return (
     <section>
       <Container>
         <Profile />
 
-        <div className="">
+        <div className="mt-4">
           <Tabs defaultValue="askedQuestions" className="w-full">
-            <TabsList className="w-full">
-              <TabsTrigger className="w-full" value="askedQuestions">
+            <TabsList className="flex">
+              <TabsTrigger
+                className="flex-1 text-center font-semibold"
+                value="askedQuestions"
+              >
                 Asked Questions
               </TabsTrigger>
-              <TabsTrigger className="w-full" value="likedQuestions">
+              <TabsTrigger
+                className="flex-1 text-center font-semibold"
+                value="likedQuestions"
+              >
                 Liked Questions
               </TabsTrigger>
             </TabsList>
+
+            {/* Asked Questions Tab */}
             <TabsContent value="askedQuestions">
-              {QUESTIONITEM_DYMMY_DATA.map((data, index) => {
-                return (
-                  <Link to="/" key={index}>
-                    <QuestionItem {...data} />
-                  </Link>
-                );
-              })}
+              <div
+                ref={parentRefAskedQuestions}
+                className="h-[400px] overflow-auto border rounded scroll-hidden"
+              >
+                <div
+                  style={{
+                    height: `${askedQuestionsVirtual.getTotalSize()}px`,
+                    position: "relative",
+                  }}
+                >
+                  {askedQuestionsVirtual.getVirtualItems().map((virtualRow) => {
+                    const data = QUESTIONITEM_DYMMY_DATA[virtualRow.index];
+                    return (
+                      <div
+                        key={virtualRow.index}
+                        data-index={virtualRow.index}
+                        className="absolute top-0 left-0 w-full"
+                        style={{
+                          transform: `translateY(${virtualRow.start}px)`,
+                        }}
+                        ref={askedQuestionsVirtual.measureElement}
+                      >
+                        <Link to={data.link}>
+                          <QuestionItem {...data} />
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </TabsContent>
+            {/* Liked Questions Tab */}
             <TabsContent value="likedQuestions">
-              {LIKED_QUESTIONITEM_DYMMY_DATA.map((data, index) => {
-                return (
-                  <Link to="/" key={index}>
-                    <QuestionItem {...data} />
-                  </Link>
-                );
-              })}
+              <div
+                ref={parentRefLikedQuestions}
+                className="h-[400px] overflow-auto border rounded scroll-hidden"
+              >
+                <div
+                  style={{
+                    height: `${likedQuestionsVirtual.getTotalSize()}px`,
+                    position: "relative",
+                  }}
+                >
+                  {likedQuestionsVirtual.getVirtualItems().map((virtualRow) => {
+                    const data =
+                      LIKED_QUESTIONITEM_DYMMY_DATA[virtualRow.index];
+                    return (
+                      <div
+                        key={virtualRow.index}
+                        data-index={virtualRow.index}
+                        className="absolute top-0 left-0 w-full"
+                        style={{
+                          transform: `translateY(${virtualRow.start}px)`,
+                        }}
+                        ref={likedQuestionsVirtual.measureElement}
+                      >
+                        <Link to={data.link}>
+                          <QuestionItem {...data} />
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
