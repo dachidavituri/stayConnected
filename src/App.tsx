@@ -34,7 +34,7 @@ const App: React.FC = () => {
         ></Route>
         <Route path="/" element={<DefaultLayout />}>
           <Route
-            path="questions"
+            path="add-question"
             element={
               // <ProfileGuard>
               <AskQuestionsView />

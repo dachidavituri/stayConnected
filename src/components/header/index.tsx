@@ -11,6 +11,9 @@ import { Link } from "react-router";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
   return (
     <header>
       <Container>
@@ -28,22 +31,25 @@ const Header: React.FC = () => {
             </div>
 
             <div className="flex flex-col justify-center items-center lg:flex-row xl:ml-auto gap-6">
-              <Link to="/questions">
+              <Link to="/add-question">
                 <Button>Add Question</Button>
               </Link>
               <Button variant={"secondary"}>Logout</Button>
+
               <Avatar className="rounded-full overflow-hidden">
-                <AvatarImage
-                  className="w-11 h-11 rounded"
-                  src="https://github.com/shadcn.png"
-                />
-                <AvatarFallback>CN</AvatarFallback>
+                <Link to="/profile">
+                  <AvatarImage
+                    className="w-11 h-11 rounded"
+                    src="https://github.com/shadcn.png"
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Link>
               </Avatar>
             </div>
           </div>
           <div className="xl:hidden ml-auto">
             <button
-              onClick={() => setIsMenuOpen((prev) => !prev)}
+              onClick={toggleMenu}
               className="text-gray-800 focus:outline-none"
             >
               <GiHamburgerMenu />
