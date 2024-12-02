@@ -1,9 +1,9 @@
-import { FaStar, FaThumbsUp, FaRegStar } from "react-icons/fa";
+import { FaStar, FaThumbsUp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 interface AnsweredBy {
   avatarUrl: string;
   name: string;
-  rating: number;
+  likes: number;
 }
 
 interface AnswerCardProps {
@@ -15,32 +15,22 @@ interface AnswerCardProps {
 }
 
 const AnswerCard: React.FC<AnswerCardProps> = ({ answer }) => {
-  const renderStars = (rating: number) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        i < rating ? (
-          <FaStar key={i} className="text-yellow-500" />
-        ) : (
-          <FaRegStar key={i} className="text-gray-400" />
-        ),
-      );
-    }
-    return stars;
-  };
-
   return (
     <div className="mt-8 p-6 md:p-8 flex flex-col gap-4 mx-5 sm:mx-[120px] border border-gray-200 rounded-lg">
       <div className="flex items-center gap-4">
-        <img
-          src={answer.answeredBy.avatarUrl}
-          alt="Avatar"
-          className="w-10 h-10 rounded-full"
-        />
+        <span className="w-10 h-10 rounded-full bg-gray-400 text-white font-bold flex items-center justify-center">
+          {answer.answeredBy.name.split(" ").map((part, index) =>
+            index < 2 ? (
+              <span key={index} className="text-sm">
+                {part[0]}
+              </span>
+            ) : null,
+          )}
+        </span>
         <div>
           <p className="text-sm font-medium">{answer.answeredBy.name}</p>
-          <div className="flex items-center gap-1 text-yellow-500">
-            {renderStars(answer.answeredBy.rating)}
+          <div className="flex items-center gap-1">
+            {`Likes: ${answer.answeredBy.likes}`}
           </div>
         </div>
       </div>
