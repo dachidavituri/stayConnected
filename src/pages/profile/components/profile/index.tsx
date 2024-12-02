@@ -6,7 +6,7 @@ const Profile: React.FC = () => {
   return (
     <Card className="my-16 p-12 flex gap-10 items-center">
       <Avatar className="rounded-full overflow-hidden w-36 h-36">
-        <AvatarImage 
+        <AvatarImage
           className="w-full h-full rounded"
           src="https://github.com/shadcn.png"
         />
