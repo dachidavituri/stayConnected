@@ -7,7 +7,10 @@ import { loginFormSchema } from "@/schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSignIn } from "@/react-query/mutation/auth";
+import { afterSignInSuccess } from "../utils";
+import { useQueryClient } from "@tanstack/react-query";
 const LoginForm: React.FC = () => {
+  const queryClient = useQueryClient();
   type UserForm = z.infer<typeof loginFormSchema>;
   const navigate = useNavigate();
   const {
@@ -23,7 +26,12 @@ const LoginForm: React.FC = () => {
     handleSignIn(
       { payload: data },
       {
-        onSuccess: () => {
+        onSuccess: (res) => {
+          afterSignInSuccess({
+            accessToken: res.access,
+            refreshToken: res.refresh,
+          });
+          queryClient.invalidateQueries({ queryKey: ["me"] });
           navigate("/home");
         },
       },

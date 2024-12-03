@@ -13,9 +13,17 @@ import { Link } from "react-router";
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const { mutate: handleSignOut } = useSignOut();
+  // const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
+  // const handleSignOutClick = () => {
+  //   handleSignOut(undefined, {
+  //     onSuccess: () => {
+  //       navigate("/login");
+  //     },
+  //   });
+  // };
   return (
     <header>
       <Container>

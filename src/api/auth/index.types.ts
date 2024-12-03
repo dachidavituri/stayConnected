@@ -17,6 +17,6 @@ export type RefreshPayload = {
 };
 
 export type UserResponse = {
-  string: string;
-  password: string;
+  email: string;
+  username: string;
 };
