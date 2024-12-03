@@ -8,9 +8,11 @@ import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router";
+// import { useSignOut } from "@/react-query/mutation/auth";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const { mutate: handleSignOut } = useSignOut();
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
