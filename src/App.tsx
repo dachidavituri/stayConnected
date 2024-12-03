@@ -10,6 +10,7 @@ import AskQuestionsView from "#/questions/views";
 import DefaultLayout from "@/layouts";
 import SingleQuestionView from "#/singleQuestion/views";
 import ProfileView from "./pages/profile/views/profileView";
+// 
 const App: React.FC = () => {
   return (
     <div>
