@@ -1,16 +1,17 @@
 import Card from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Heading from "@/components/ui/heading";
+import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
 
 const Profile: React.FC = () => {
+  const { user } = useAuthContext();
   return (
     <Card className="my-16 p-12 flex gap-10 items-center">
       <Avatar className="rounded-full overflow-hidden w-36 h-36">
-        <AvatarImage
-          className="w-full h-full rounded"
-          src="https://github.com/shadcn.png"
-        />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarImage className="w-full h-full rounded" src="" />
+        <AvatarFallback className="font-semibold bg-black text-white">
+          {user.username}
+        </AvatarFallback>
       </Avatar>
       <div className="">
         <Heading level={1}>Tiko</Heading>

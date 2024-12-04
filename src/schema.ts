@@ -13,27 +13,22 @@ const passwordSchema = z
   });
 
 export const loginFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: "Name is required" })
-    .min(3, { message: "Name must be at least 3 characters long." }),
   email: z.string().email(),
   password: passwordSchema,
 });
 
 export const regiserFormSchema = z
   .object({
-    name: z
+    username: z
       .string()
-      .min(1, { message: "Name is required" })
-      .min(3, { message: "Name must be at least 3 characters long" }),
+      .min(1, { message: "userName is required" })
+      .min(3, { message: "userName must be at least 3 characters long" })
+      .max(20, { message: "userName max length is 20" }),
     email: z.string().email(),
     password: passwordSchema,
-    confirmPassword: z
-      .string()
-      .min(1, { message: "Confirm password is required" }),
+    password2: z.string().min(1, { message: "Confirm password is required" }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.password2, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });

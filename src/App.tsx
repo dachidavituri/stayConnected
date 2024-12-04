@@ -5,41 +5,41 @@ import HomeView from "#/home/views";
 import LoginViews from "#/login/views";
 import NotFoundView from "&/notFound";
 import AskQuestionsView from "#/questions/views";
-// import AuthRegisterGuard from "&/guard/authGuard";
-// import ProfileGuard from "&/guard/profileGuard";
+import AuthRegisterGuard from "&/guard/authGuard";
+import ProfileGuard from "&/guard/profileGuard";
 import DefaultLayout from "@/layouts";
 import SingleQuestionView from "#/singleQuestion/views";
 import ProfileView from "./pages/profile/views/profileView";
 const App: React.FC = () => {
-  // hllo
   return (
     <div>
       <Routes>
         <Route
           path="login"
           element={
-            // <AuthRegisterGuard>
-            <LoginViews />
-            // </AuthRegisterGuard>
+            <AuthRegisterGuard>
+              <LoginViews />
+              //{" "}
+            </AuthRegisterGuard>
           }
         ></Route>
         <Route
           path="register"
           element={
-            // <AuthRegisterGuard>
-            <RegistrationView />
-            // </AuthRegisterGuard>
+            <AuthRegisterGuard>
+              <RegistrationView />
+            </AuthRegisterGuard>
           }
         ></Route>
-        <Route path="/" element={<DefaultLayout />}>
-          <Route
-            path="add-question"
-            element={
-              // <ProfileGuard>
-              <AskQuestionsView />
-              // </ProfileGuard>
-            }
-          />
+        <Route
+          path="/"
+          element={
+            <ProfileGuard>
+              <DefaultLayout />
+            </ProfileGuard>
+          }
+        >
+          <Route path="add-question" element={<AskQuestionsView />} />
           <Route path="home" element={<HomeView />} />
           <Route path="profile" element={<ProfileView />} />
           <Route path="questions/:id" element={<SingleQuestionView />} />
