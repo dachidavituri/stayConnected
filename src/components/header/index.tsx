@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     localStorage.removeItem("refreshToken");
     handleSignOut(undefined, {
       onSuccess: () => {
-        queryClient.setQueryData(['me'], null);
+        queryClient.setQueryData(["me"], null);
         navigate("/login");
       },
     });

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +8,19 @@ import { regiserFormSchema } from "@/schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSignUp } from "@/react-query/mutation/auth";
+import { notification } from "antd";
 const RegisterForm: React.FC = () => {
+  type NotificationType = "error";
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (
+    type: NotificationType,
+    errMessage: string,
+  ) => {
+    api[type]({
+      message: "Error",
+      description: errMessage,
+    });
+  };
   type RegisterForm = z.infer<typeof regiserFormSchema>;
   const navigate = useNavigate();
   const {
@@ -24,11 +37,21 @@ const RegisterForm: React.FC = () => {
       { payload: data },
       {
         onSuccess: () => navigate("/login"),
+        onError: (err: any) => {
+          console.log(err.message);
+          if (
+            err.message.includes("Username") ||
+            err.message.includes("Email")
+          ) {
+            openNotificationWithIcon("error", err.message);
+          }
+        },
       },
     );
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {contextHolder}
       <div className="flex flex-col gap-6">
         <div>
           <Controller
@@ -63,7 +86,12 @@ const RegisterForm: React.FC = () => {
             control={control}
             name="password"
             render={({ field }) => (
-              <Input id="password" placeholder="Password" {...field} type="password"/>
+              <Input
+                id="password"
+                placeholder="Password"
+                {...field}
+                type="password"
+              />
             )}
           />
           {errors.password?.message && (
@@ -77,7 +105,12 @@ const RegisterForm: React.FC = () => {
             control={control}
             name="password2"
             render={({ field }) => (
-              <Input id="password2" placeholder="Confirm Password" {...field} type="password"/>
+              <Input
+                id="password2"
+                placeholder="Confirm Password"
+                {...field}
+                type="password"
+              />
             )}
           />
           {errors.password2?.message && (

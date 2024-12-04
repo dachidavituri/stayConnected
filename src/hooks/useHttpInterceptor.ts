@@ -17,7 +17,6 @@ export const useHttpInterceptor = () => {
       },
       (resErr) => {
         const refreshToken = localStorage.getItem("refreshToken");
-        console.log(`refreshtoken is`, refreshToken);
         if (resErr.status === 401 && refreshToken) {
           setIsRefreshLoading(true);
 

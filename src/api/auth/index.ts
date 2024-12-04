@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { httpClient } from "..";
 import { AUTH_ENDPOINTS } from "./index.enum";
 import {
@@ -12,9 +13,25 @@ export const login = async ({ payload }: LoginPayload) => {
 };
 
 export const register = async ({ payload }: RegisterPayload) => {
-  return httpClient
-    .post(AUTH_ENDPOINTS.REGISTER, payload)
-    .then((res) => res.data);
+  try {
+    const res: any = await httpClient.post(AUTH_ENDPOINTS.REGISTER, payload);
+
+    const errorMessage =
+      res?.response?.data?.email || res?.response?.data?.username;
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+
+    if (res?.data) {
+      return res.data;
+    }
+  } catch (error: any) {
+    if (error?.message) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("An unexpected error occurred.");
+    }
+  }
 };
 
 export const logout = async () => {
@@ -31,8 +48,8 @@ export const getMe = async () => {
   return httpClient
     .get<UserResponse>(AUTH_ENDPOINTS.USER, {
       headers: {
-        'ngrok-skip-browser-warning': 'true',
+        "ngrok-skip-browser-warning": "true",
       },
     })
-    .then((res) => res.data || 'No User');
+    .then((res) => res.data || "No User");
 };
