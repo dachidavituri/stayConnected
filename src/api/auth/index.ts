@@ -29,6 +29,10 @@ export const refresh = async ({ payload }: RefreshPayload) => {
 
 export const getMe = async () => {
   return httpClient
-    .get<UserResponse>(AUTH_ENDPOINTS.USER)
-    .then((res) => res.data);
+    .get<UserResponse>(AUTH_ENDPOINTS.USER, {
+      headers: {
+        'ngrok-skip-browser-warning': 'true',
+      },
+    })
+    .then((res) => res.data || 'No User');
 };

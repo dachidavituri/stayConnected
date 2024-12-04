@@ -63,7 +63,7 @@ const RegisterForm: React.FC = () => {
             control={control}
             name="password"
             render={({ field }) => (
-              <Input id="password" placeholder="Password" {...field} />
+              <Input id="password" placeholder="Password" {...field} type="password"/>
             )}
           />
           {errors.password?.message && (
@@ -77,7 +77,7 @@ const RegisterForm: React.FC = () => {
             control={control}
             name="password2"
             render={({ field }) => (
-              <Input id="password2" placeholder="Confirm Password" {...field} />
+              <Input id="password2" placeholder="Confirm Password" {...field} type="password"/>
             )}
           />
           {errors.password2?.message && (

@@ -1,29 +1,36 @@
 import React from "react";
 import Container from "../ui/container";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import logo from "@/assets/Frame 28.svg";
 import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router";
-// import { useSignOut } from "@/react-query/mutation/auth";
-
+import { Link, useNavigate } from "react-router";
+import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
+import { useSignOut } from "@/react-query/mutation/auth";
+import { useQueryClient } from "@tanstack/react-query";
 const Header: React.FC = () => {
+  const queryClient = useQueryClient();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const { mutate: handleSignOut } = useSignOut();
-  // const navigate = useNavigate();
+  const { user } = useAuthContext();
+  console.log(user);
+
+  const { mutate: handleSignOut } = useSignOut();
+  const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
-  // const handleSignOutClick = () => {
-  //   handleSignOut(undefined, {
-  //     onSuccess: () => {
-  //       navigate("/login");
-  //     },
-  //   });
-  // };
+  const handleSignOutClick = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    handleSignOut(undefined, {
+      onSuccess: () => {
+        queryClient.setQueryData(['me'], null);
+        navigate("/login");
+      },
+    });
+  };
   return (
     <header>
       <Container>
@@ -44,17 +51,15 @@ const Header: React.FC = () => {
               <Link to="/add-question">
                 <Button>Add Question</Button>
               </Link>
-              <Button variant={"secondary"}>Logout</Button>
+              <Button variant={"secondary"} onClick={handleSignOutClick}>
+                Logout
+              </Button>
 
-              <Avatar className="rounded-full overflow-hidden">
-                <Link to="/profile">
-                  <AvatarImage
-                    className="w-11 h-11 rounded"
-                    src="https://github.com/shadcn.png"
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Link>
-              </Avatar>
+              <Link to="/profile">
+                <div className="bg-black text-white p-2 rounded-md">
+                  {user?.username}
+                </div>
+              </Link>
             </div>
           </div>
           <div className="xl:hidden ml-auto">
