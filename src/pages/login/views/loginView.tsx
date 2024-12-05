@@ -1,12 +1,12 @@
 import Heading from "@/components/ui/heading";
 import Card from "@/components/ui/card";
-import logo from "@/assets/Frame 69.svg";
+import logo from "@/assets/Frame 28.svg";
 import Container from "@/components/ui/container";
 import LoginForm from "#/login/components";
 const LoginView: React.FC = () => {
   return (
     <Container>
-      <section className="register sm:w-[343px] md:w-[400px] flex flex-col gap-11 justify-center items-center m-auto">
+      <section className="register sm:w-[343px] md:w-[400px] flex flex-col h-screen gap-11 justify-center items-center m-auto">
         <div className="">
           <img className="w-28" src={logo} alt="" />
         </div>
