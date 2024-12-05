@@ -113,7 +113,13 @@ const ProfileView: React.FC = () => {
                         ref={askedQuestionsVirtual.measureElement}
                       >
                         <Link to={data.link}>
-                          <QuestionItem {...data} />
+                          <QuestionItem
+                            id={0}
+                            description={""}
+                            createdAt={""}
+                            tags={[]}
+                            {...data}
+                          />
                         </Link>
                       </div>
                     );
@@ -147,7 +153,13 @@ const ProfileView: React.FC = () => {
                         ref={likedQuestionsVirtual.measureElement}
                       >
                         <Link to={data.link}>
-                          <QuestionItem {...data} />
+                          <QuestionItem
+                            id={0}
+                            description={""}
+                            createdAt={""}
+                            tags={[]}
+                            {...data}
+                          />
                         </Link>
                       </div>
                     );

@@ -14,7 +14,7 @@ const Profile: React.FC = () => {
         </AvatarFallback>
       </Avatar>
       <div className="">
-        <Heading level={1}>Tiko</Heading>
+        <Heading level={1}>{user.username}</Heading>
         <div className="flex flex-col lg:flex-row lg:gap-5 mt-4 lg:items-center">
           <div className="flex gap-2">
             <div className="font-semibold text-gray-500">Raiting:</div>

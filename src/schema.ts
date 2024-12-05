@@ -34,14 +34,17 @@ export const regiserFormSchema = z
   });
 
 export const answerFormSchema = z.object({
-  answer: z
+  content: z
     .string()
     .min(1, { message: "Answer is required" })
     .min(15, { message: "Answer must be at least 15 characters long" }),
 });
 
 export const addQuetionSchema = z.object({
-  title: z.string().min(1, "Title is required"),
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .max(50, "Title Max length is 50 characters"),
   description: z.string().min(1, "Description is required"),
   tags: z.array(z.string()).nonempty("At least one tag is required"),
 });

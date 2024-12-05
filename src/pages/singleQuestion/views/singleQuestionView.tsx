@@ -12,6 +12,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import usePagination from "@/hooks/pagination";
+import { useParams } from "react-router";
+import { useDetailQuestion } from "@/react-query/query/questions";
 
 const QuestionPageData = {
   question: {
@@ -56,8 +58,9 @@ const QuestionPageData = {
     },
   ],
 };
-
 const SingleQuestionView: React.FC = () => {
+  const { id } = useParams();
+  const { data: detailQuestion } = useDetailQuestion(id);
   const {
     currentItems: paginatedAnswers,
     currentPage,
@@ -70,7 +73,13 @@ const SingleQuestionView: React.FC = () => {
 
   return (
     <div className="py-10 px-4 md:px-0 max-w-[820px] mx-auto">
-      <Question question={QuestionPageData.question} />
+      <Question
+        author={detailQuestion?.author}
+        createdAt={detailQuestion?.createdAt}
+        description={detailQuestion?.description}
+        tags={detailQuestion?.tags}
+        title={detailQuestion?.title}
+      />
       <div>
         {paginatedAnswers.map((answer, index) => (
           <AnswerCard key={index} answer={answer} />

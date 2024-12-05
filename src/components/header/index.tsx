@@ -48,13 +48,15 @@ const Header: React.FC = () => {
             </div>
 
             <div className="flex flex-col justify-center items-center lg:flex-row xl:ml-auto gap-6">
+              <Link to="/home">
+                <Button>Home</Button>
+              </Link>
               <Link to="/add-question">
                 <Button>Add Question</Button>
               </Link>
               <Button variant={"secondary"} onClick={handleSignOutClick}>
                 Logout
               </Button>
-
               <Link to="/profile">
                 <div className="bg-black text-white p-2 rounded-md">
                   {user?.username}

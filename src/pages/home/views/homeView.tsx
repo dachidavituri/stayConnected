@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Pagination,
@@ -15,63 +15,7 @@ import Card from "@/components/ui/card";
 import Container from "@/components/ui/container";
 import Heading from "@/components/ui/heading";
 import usePagination from "@/hooks/pagination";
-
-const QUESTIONITEM_DYMMY_DATA = [
-  {
-    title: "1 What is Jotai?",
-    author: "Tinatin Gordadze",
-    date: "12.12.2024",
-    question: "Jotai is a simple and fast state management library for React.",
-    badges: ["react", "Jotai", "Development", "next"],
-    link: "/questions/1",
-    answers: 12,
-  },
-  {
-    title: "2 What is Jotai?",
-    author: "Tinatin Gordadze",
-    date: "12.12.2024",
-    question: "What are selectors in Jotai?",
-    badges: ["react", "Jotai", "Development", "next"],
-    link: "/questions/2",
-    answers: 5,
-  },
-  {
-    title: "3 What is the difference between Jotai and Redux?",
-    author: "Tinatin Gordadze",
-    date: "12.12.2024",
-    question: "How does Jotai differ from Redux in state management?",
-    badges: ["react", "Jotai", "Redux", "next"],
-    link: "/questions/3",
-    answers: 7,
-  },
-  {
-    title: "4 How to use Jotai with TypeScript?",
-    author: "Tinatin Gordadze",
-    date: "12.12.2024",
-    question: "Can Jotai be used with TypeScript?",
-    badges: ["react", "Jotai", "TypeScript", "next"],
-    link: "/questions/4",
-    answers: 3,
-  },
-  {
-    title: "5 How to implement atoms in Jotai?",
-    author: "Tinatin Gordadze",
-    date: "12.12.2024",
-    question: "How can atoms be created and used in Jotai?",
-    badges: ["react", "Jotai", "Development", "next"],
-    link: "/questions/5",
-    answers: 8,
-  },
-  {
-    title: "6 What is the best way to manage global state in React?",
-    author: "Tinatin Gordadze",
-    date: "12.12.2024",
-    question: "What strategies can be used to manage global state?",
-    badges: ["react", "Jotai", "State Management", "next"],
-    link: "/questions/6",
-    answers: 20,
-  },
-];
+import { useQuestions } from "@/react-query/query/questions";
 
 const RATINGS_DAMMY_DATA = [
   { name: "1 Tiko Gordadze", rating: 32 },
@@ -80,13 +24,31 @@ const RATINGS_DAMMY_DATA = [
 ];
 
 const HomeView: React.FC = () => {
-  const {
-    currentItems,
-    currentPage,
-    handleNextPage,
-    handlePreviousPage,
-    totalPages,
-  } = usePagination(QUESTIONITEM_DYMMY_DATA, 3);
+  const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { data: questionsArr } = useQuestions(nextPageUrl);
+  const totalPages = (questionsArr && questionsArr?.count / 4) || 1;
+  console.log(questionsArr);
+  const { currentItems, handleNextPage, handlePreviousPage } = usePagination(
+    questionsArr?.results || [],
+    4,
+  );
+  const handleNextPageClick = () => {
+    if (questionsArr?.next) {
+      const queryString = new URL(questionsArr.next).search;
+      setNextPageUrl(queryString);
+      setCurrentPage((prevCur) => prevCur + 1);
+    }
+    handleNextPage();
+  };
+  const handlePreviousPageClick = () => {
+    if (questionsArr?.previous) {
+      const queryString = new URL(questionsArr.previous).search;
+      setNextPageUrl(queryString);
+      setCurrentPage((prevCur) => prevCur - 1);
+    }
+    handlePreviousPage();
+  };
   return (
     <section>
       <Container>
@@ -101,7 +63,7 @@ const HomeView: React.FC = () => {
           </div>
           <div className="flex flex-col gap-6 w-full xl:w-[70%]">
             {currentItems.map((data, index) => (
-              <Link to={data.link} key={index}>
+              <Link to={`/questions/${data.id}`} key={index}>
                 <QuestionItem {...data} />
               </Link>
             ))}
@@ -110,7 +72,7 @@ const HomeView: React.FC = () => {
         <Pagination className="mt-2">
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious onClick={handlePreviousPage} />
+              <PaginationPrevious onClick={handlePreviousPageClick} />
             </PaginationItem>
             <PaginationItem>
               <PaginationLink href="#" className="cursor-default">
@@ -123,7 +85,7 @@ const HomeView: React.FC = () => {
               </PaginationItem>
             )}
             <PaginationItem>
-              <PaginationNext onClick={handleNextPage} />
+              <PaginationNext onClick={handleNextPageClick} />
             </PaginationItem>
           </PaginationContent>
         </Pagination>

@@ -12,11 +12,14 @@ import { addQuetionSchema } from "@/schema";
 import { useCreateQuestion } from "@/react-query/mutation/question";
 import { notification } from "antd";
 import { z } from "zod";
+import { CreateQuestionPayload } from "@/api/questions/index.types";
+import { useNavigate } from "react-router";
 
 const AskQuestionsView: React.FC = () => {
   type AddQuestionForm = z.infer<typeof addQuetionSchema>;
+  const navigate = useNavigate();
 
-  const { mutate: submitQuestion, } = useCreateQuestion();
+  const { mutate: submitQuestion } = useCreateQuestion();
   const [api, contextHolder] = notification.useNotification();
 
   const openNotification = (type: "success" | "error", message: string) => {
@@ -36,9 +39,15 @@ const AskQuestionsView: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<AddQuestionForm> = (data) => {
-    submitQuestion(data, {
+    const payload: CreateQuestionPayload = {
+      title: data.title,
+      description: data.description,
+      tags: data.tags.map((tag: string) => ({ name: tag })),
+    };
+    submitQuestion(payload, {
       onSuccess: () => {
         openNotification("success", "Question submitted successfully!");
+        navigate("/home");
       },
       onError: (error) => {
         openNotification("error", "Failed to submit question.");
@@ -53,7 +62,10 @@ const AskQuestionsView: React.FC = () => {
         <div className="m-auto border border-gray-200 rounded-lg w-full xl:w-[820px] md:p-11">
           <Card className="flex flex-col items-center justify-center gap-8 md:w-[500px] m-auto">
             <Heading level={1}>Ask Your Question!</Heading>
-            <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit(onSubmit)}>
+            <form
+              className="flex flex-col gap-6 w-full"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <div>
                 <Label>Question Title</Label>
                 <Controller
@@ -95,9 +107,7 @@ const AskQuestionsView: React.FC = () => {
                 )}
               </div>
               <div className="flex items-center justify-center">
-                <Button className="w-full lg:w-96">
-                  {"Send"}
-                </Button>
+                <Button className="w-full lg:w-96">{"Send"}</Button>
               </div>
             </form>
           </Card>

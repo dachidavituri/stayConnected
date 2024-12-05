@@ -5,6 +5,9 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { answerFormSchema } from "@/schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateAnswer } from "@/react-query/mutation/answers";
+import { useParams } from "react-router";
+import { AnswerPayload } from "@/api/answers/index.types";
 const AnswerFild: React.FC = () => {
   type AnswerForm = z.infer<typeof answerFormSchema>;
   const {
@@ -13,11 +16,16 @@ const AnswerFild: React.FC = () => {
     formState: { errors },
   } = useForm<AnswerForm>({
     resolver: zodResolver(answerFormSchema),
-    defaultValues: { answer: "" },
+    defaultValues: { content: "" },
   });
+  const { id } = useParams();
+  const { mutate: submitQuestion } = useCreateAnswer(id);
   const onSubmit: SubmitHandler<AnswerForm> = (data) => {
-    const result = answerFormSchema.safeParse(data);
-    console.log(result);
+    const payload: AnswerPayload = {
+      content: data.content,
+      question: parseInt(id ?? "0"),
+    };
+    submitQuestion(payload);
   };
   return (
     <div className="mt-8 px-6 md:px-8 flex flex-col">
@@ -32,7 +40,7 @@ const AnswerFild: React.FC = () => {
         <div className="w-full">
           <Controller
             control={control}
-            name="answer"
+            name="content"
             render={({ field }) => (
               <Textarea
                 className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none  text-gray-700"
@@ -42,9 +50,9 @@ const AnswerFild: React.FC = () => {
               />
             )}
           />
-          {errors.answer && (
+          {errors.content && (
             <span className="text-red-600 font-semibold text-xs sm:text-sm md:text-base">
-              {errors.answer.message}
+              {errors.content.message}
             </span>
           )}
         </div>
