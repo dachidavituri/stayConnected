@@ -16,17 +16,14 @@ import Container from "@/components/ui/container";
 import Heading from "@/components/ui/heading";
 import usePagination from "@/hooks/pagination";
 import { useQuestions } from "@/react-query/query/questions";
-
-const RATINGS_DAMMY_DATA = [
-  { name: "1 Tiko Gordadze", rating: 32 },
-  { name: "2 Tiko Gordadze", rating: 2 },
-  { name: "3 Tiko Gordadze", rating: 62 },
-];
+import { useRatings } from "@/react-query/query/ratings";
 
 const HomeView: React.FC = () => {
   const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { data: questionsArr } = useQuestions(nextPageUrl);
+  const { data: ratingsArr } = useRatings();
+  console.log(ratingsArr);
   const totalPages = (questionsArr && questionsArr?.count / 4) || 1;
   console.log(questionsArr);
   const { currentItems, handleNextPage, handlePreviousPage } = usePagination(
@@ -55,10 +52,11 @@ const HomeView: React.FC = () => {
         <div className="flex flex-col xl:flex-row gap-6 items-start">
           <div className="w-full xl:w-[30%]">
             <Card className="flex flex-col gap-6">
-              <Heading level={1}>Rating of users</Heading>
-              {RATINGS_DAMMY_DATA.map((data, index) => {
-                return <RatingItem key={index} {...data} />;
-              })}
+              <Heading level={1}>Top users</Heading>
+              {ratingsArr &&
+                ratingsArr.results.map((data, index) => {
+                  return <RatingItem key={index} {...data} />;
+                })}
             </Card>
           </div>
           <div className="flex flex-col gap-6 w-full xl:w-[70%]">
