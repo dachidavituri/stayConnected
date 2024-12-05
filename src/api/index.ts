@@ -9,3 +9,4 @@ export const httpClient = axios.create(axiosConfig);
 export const setAuthorizationHeader = (accessToken: string) => {
   httpClient.defaults.headers["Authorization"] = accessToken;
 };
+

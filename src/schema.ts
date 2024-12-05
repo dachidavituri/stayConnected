@@ -41,15 +41,7 @@ export const answerFormSchema = z.object({
 });
 
 export const addQuetionSchema = z.object({
-  title: z
-    .string()
-    .min(1, { message: "Title is required" })
-    .min(3, { message: "Title must be at least 4 characters long" }),
-  description: z
-    .string()
-    .min(1, { message: "Description is required" })
-    .min(25, { message: "Title must be at least 25 characters long" }),
-  tag: z
-    .array(z.string())
-    .min(1, { message: "Please choose at least 1 framework" }),
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  tags: z.array(z.string()).nonempty("At least one tag is required"),
 });
