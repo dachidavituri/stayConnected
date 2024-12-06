@@ -1,18 +1,8 @@
 import Card from "@/components/ui/card";
 import Heading from "@/components/ui/heading";
 import { Badge } from "@/components/ui/badge";
-interface Tag {
-  name: string;
-  id: number;
-}
-
-interface DetailQuestionProps {
-  author: string | undefined;
-  createdAt: string | undefined;
-  description: string | undefined;
-  tags: Tag[] | undefined;
-  title: string | undefined;
-}
+import useFormattedDate from "@/hooks/formattedDate";
+import { DetailQuestionProps } from "@/types";
 
 const Question: React.FC<DetailQuestionProps> = ({
   author,
@@ -21,11 +11,7 @@ const Question: React.FC<DetailQuestionProps> = ({
   tags,
   title,
 }) => {
-  const dateObj = createdAt ? new Date(createdAt) : new Date();
-  const day = String(dateObj.getDate()).padStart(2, "0");
-  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-  const year = dateObj.getFullYear();
-  const formattedDate = `${day}.${month}.${year}`;
+  const formattedDate = useFormattedDate(createdAt);
   return (
     <Card className="p-6 md:p-8 bg-white rounded-lg flex flex-col gap-8">
       <div className="flex justify-end items-center gap-6">

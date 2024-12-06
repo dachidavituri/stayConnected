@@ -14,8 +14,6 @@ const Header: React.FC = () => {
   const queryClient = useQueryClient();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuthContext();
-  console.log(user);
-
   const { mutate: handleSignOut } = useSignOut();
   const navigate = useNavigate();
   const toggleMenu = () => {

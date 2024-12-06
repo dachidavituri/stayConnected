@@ -23,13 +23,12 @@ const HomeView: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { data: questionsArr } = useQuestions(nextPageUrl);
   const { data: ratingsArr } = useRatings();
-  console.log(ratingsArr);
   const totalPages = (questionsArr && questionsArr?.count / 4) || 1;
-  console.log(questionsArr);
   const { currentItems, handleNextPage, handlePreviousPage } = usePagination(
     questionsArr?.results || [],
     4,
   );
+
   const handleNextPageClick = () => {
     if (questionsArr?.next) {
       const queryString = new URL(questionsArr.next).search;

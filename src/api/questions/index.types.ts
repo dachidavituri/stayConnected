@@ -17,7 +17,8 @@ interface Result {
   author: string;
   created_at: string;
   tags: Tag[];
-  number_of_answers: string;
+  numberOfAnswers: number;
+  totalLikes: number;
 }
 
 export interface QuestionResponseAll {

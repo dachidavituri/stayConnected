@@ -1,10 +1,6 @@
 import Heading from "@/components/ui/heading";
+import { RatingItem } from "@/types";
 import { MdWorkspacePremium } from "react-icons/md";
-
-type RatingItem = {
-  username: string;
-  rating: number;
-};
 
 const ReitingITem: React.FC<RatingItem> = ({ username, rating }) => {
   return (

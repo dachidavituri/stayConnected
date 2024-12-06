@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Heading from "@/components/ui/heading";
@@ -11,6 +11,11 @@ import { afterSignInSuccess } from "../utils";
 import { useQueryClient } from "@tanstack/react-query";
 const LoginForm: React.FC = () => {
   const queryClient = useQueryClient();
+  const location = useLocation();
+
+  const toNavigate =
+    location?.state?.from?.pathname + location?.state?.from?.search ||
+    "/home";
   type UserForm = z.infer<typeof loginFormSchema>;
   const navigate = useNavigate();
   const {
@@ -31,8 +36,8 @@ const LoginForm: React.FC = () => {
             accessToken: res.access,
             refreshToken: res.refresh,
           });
+          navigate(toNavigate);
           queryClient.invalidateQueries({ queryKey: ["me"] });
-          navigate("/home");
         },
       },
     );
