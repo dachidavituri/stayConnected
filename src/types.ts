@@ -42,3 +42,7 @@ export interface DetailQuestionProps {
   tags: Tag[] | undefined;
   title: string | undefined;
 }
+export type QuestionListFilterValues = {
+  title: string;
+  tags: string[]
+};

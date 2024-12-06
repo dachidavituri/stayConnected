@@ -98,7 +98,7 @@ const FancyMultiSelect: React.FC<FancyMultiSelectProps> = ({
           />
         </div>
       </div>
-      <div className="relative mt-2">
+      <div className="relative">
         <CommandList>
           {open && selectables.length > 0 && (
             <div className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">

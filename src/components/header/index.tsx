@@ -6,10 +6,14 @@ import logo from "@/assets/Frame 28.svg";
 import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
 import { useSignOut } from "@/react-query/mutation/auth";
 import { useQueryClient } from "@tanstack/react-query";
+import qs from "qs";
+import { Controller, useForm } from "react-hook-form";
+import { QuestionListFilterValues } from "@/types";
+import FancyMultiSelect from "@/pages/questions/components/multi-select";
 const Header: React.FC = () => {
   const queryClient = useQueryClient();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,6 +33,29 @@ const Header: React.FC = () => {
       },
     });
   };
+  const QuestionDefaultValues = {
+    title: "",
+    tags: [],
+  };
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const parsedQueryParams = {
+    ...QuestionDefaultValues,
+    ...qs.parse(searchParams.toString()),
+  };
+  const { control, handleSubmit } = useForm<QuestionListFilterValues>({
+    defaultValues: parsedQueryParams,
+  });
+  const onSubmit = (formValues: QuestionListFilterValues) => {
+    setSearchParams(
+      qs.stringify(formValues, {
+        skipNulls: true,
+        filter: (_, value) => {
+          return value || undefined;
+        },
+      }),
+    );
+  };
   return (
     <header>
       <Container>
@@ -41,8 +68,30 @@ const Header: React.FC = () => {
           xl:static xl:flex xl:shadow-none xl:flex-row xl:items-center xl:gap-6`}
           >
             <div className="flex items-center gap-6">
-              <Input className=" w-48 lg:w-[400px]" />
-              <FiSearch className="w-6" />
+              <Controller
+                control={control}
+                name="title"
+                render={({ field: { onChange, value } }) => {
+                  return (
+                    <Input
+                      className=" w-48 lg:w-[200px]"
+                      value={value}
+                      onChange={onChange}
+                    />
+                  );
+                }}
+              />
+              <Controller
+                control={control}
+                name="tags"
+                render={({ field: { value, onChange } }) => (
+                  <FancyMultiSelect value={value} onChange={onChange} />
+                )}
+              />
+              <FiSearch
+                className="w-6 cursor-pointer"
+                onClick={handleSubmit(onSubmit)}
+              />
             </div>
 
             <div className="flex flex-col justify-center items-center lg:flex-row xl:ml-auto gap-6">
