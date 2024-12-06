@@ -53,6 +53,7 @@ const Header: React.FC = () => {
         filter: (_, value) => {
           return value || undefined;
         },
+        arrayFormat: "comma",
       }),
     );
   };
